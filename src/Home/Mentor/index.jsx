@@ -1,0 +1,81 @@
+/**
+ * Tables Routes
+ */
+import React from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
+
+import MentorDashboard from "./mentordashboard";
+import Bookings from "./bookings";
+import Profilesettings from "./profilesettings";
+import MenteeList from "./menteelist";
+import Menteeprofile from "./menteeprofile";
+import Blog from "./blog";
+import AddBlog from "./blogadd";
+import EditBlog from "./blogedit";
+import Chat from "./chat";
+import Invoice from "./invoice";
+import InvoiceView from "./invoice-view";
+import Reviews from "./reviews";
+import Appointments from "./appointments";
+import MentorProfile from "./mentorprofile";
+import StudentProfile from "./studentProfile";
+import MentorBooking from "./MentorBooking";
+import Oferta from "../oferta/oferta";
+import Page404 from "../components/Page404/page404";
+
+const Mentorroute = ({ match }) => {
+  const role = localStorage.getItem("role");
+  if (role == "mentor") {
+    return (
+      <Switch>
+        <Redirect exact from={`${match.url}/`} to={`${match.url}/dashboard`} />
+        <Route path={`${match.url}/dashboard`} component={MentorDashboard} />
+        <Route path={`${match.url}/bookings`} component={Bookings} />
+
+        <Route path={`${match.url}/mentee-list`} component={MenteeList} />
+        <Route path={`${match.url}/blog`} component={Blog} />
+        <Route path={`${match.url}/add-blog`} component={AddBlog} />
+        <Route path={`${match.url}/edit-blog`} component={EditBlog} />
+        <Route path={`${match.url}/chat`} component={Chat} />
+        <Route path={`${match.url}/invoices`} component={Invoice} />
+        <Route path={`${match.url}/invoice-view`} component={InvoiceView} />
+        <Route
+          path={`${match.url}/mentee-profile/:mentee_id`}
+          component={Menteeprofile}
+        />
+        <Route
+          path={`${match.url}/profile-settings`}
+          component={Profilesettings}
+        />
+        <Route path={`${match.url}/reviews`} component={Reviews} />
+        <Route
+          path={`${match.url}/booking/:mentor_id`}
+          component={MentorBooking}
+        />
+
+        <Route path={`${match.url}/appointments`} component={Appointments} />
+        <Route path={`${match.url}/mentor-profile`} component={MentorProfile} />
+
+        <Route
+          path={`${match.url}/student-profile/:id/:lesson_id`}
+          component={StudentProfile}
+        />
+        <Route component={Page404} />
+      </Switch>
+    );
+  } else {
+    return (
+      <>
+        <Switch>
+          <Route
+            path={`${match.url}/booking/:mentor_id`}
+            component={MentorBooking}
+          />
+          <Route component={Page404} />
+        </Switch>
+      </>
+    );
+  }
+};
+
+export default Mentorroute;
